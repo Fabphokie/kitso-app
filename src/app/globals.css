@@ -3,7 +3,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Define the pastel color scheme */
 :root {
+  --soft-blue: #AEC6CF;
+  --cream-white: #FFFDD0;
+  --blush-pink: #FFD1DC;
+
+
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 255, 255, 255; /* Set to white */
   --background-end-rgb: 255, 255, 255;   /* Set to white */
@@ -27,12 +33,53 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+/* Utility class for balanced text wrapping */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 }
 
+/* Style for the footer to stick at the bottom */
 footer {
   margin-top: auto;
+}
+
+/* Example styles for using pastel colors */
+.bg-soft-blue {
+  background-color: var(--soft-blue);
+}
+
+.bg-cream-white {
+  background-color: var(--cream-white);
+}
+
+.bg-blush-pink {
+  background-color: var(--blush-pink);
+}
+
+.text-soft-blue {
+  color: var(--soft-blue);
+}
+
+.text-cream-white {
+  color: var(--cream-white);
+}
+
+.text-blush-pink {
+  color: var(--blush-pink);
+}
+
+/* Optional styles for buttons */
+.button {
+  background-color: var(--blush-pink);
+  color: var(--cream-white);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: var(--soft-blue);
 }
