@@ -1,18 +1,29 @@
-// src/app/family-planning/page.tsx
-import Link from 'next/link';
+'use client'
 
-const FamilyPlanningPage = () => {
+import { useEffect, useState } from 'react';
+import { fetchFamilyPlanning } from '../../utils/data/fetchFamilyPlanning';
+
+const FamilyPlanPage = () => {
+  const [data, setData] = useState({ title: '', content: '' });
+
+  useEffect(() => {
+    const getData = async () => {
+      const result = await fetchFamilyPlanning();
+      setData(result);
+    };
+
+    getData();
+  }, []);
+
   return (
-    <div className="p-8 bg-cream-white min-h-screen">
-      <h1 className="text-soft-blue text-3xl mb-4">Family Planning</h1>
-      <p className="text-gray-700 mb-4">
-        Family planning is important for a healthy family. Learn about different methods of contraception, family planning strategies, and resources available.
-      </p>
-      <Link href="/" className="text-blush-pink hover:underline">
-        Back to Home
-      </Link>
+    <div className="p-8 bg-cream-white min-h-screen text-center">
+      <h1 className="text-soft-blue text-4xl mb-4">{data.title}</h1>
+      <div
+        className="text-gray-700 whitespace-pre-line"
+        dangerouslySetInnerHTML={{ __html: data.content }}
+      />
     </div>
   );
 };
 
-export default FamilyPlanningPage;
+export default FamilyPlanPage;

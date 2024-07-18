@@ -1,18 +1,27 @@
-// src/app/puberty/page.tsx
-import Link from 'next/link';
+'use client'
 
-const PubertyPage = () => {
+import { useEffect, useState } from 'react';
+import { fetchPuberty } from '../../utils/data/fetchPuberty';
+
+export default function PubertyPage() {
+  const [data, setData] = useState({ title: '', content: '' });
+
+  useEffect(() => {
+    const getData = async () => {
+      const result = await fetchPuberty();
+      setData(result);
+    };
+
+    getData();
+  }, []);
+
   return (
-    <div className="p-8 bg-cream-white min-h-screen">
-      <h1 className="text-soft-blue text-3xl mb-4">Understanding Puberty</h1>
-      <p className="text-gray-700 mb-4">
-        Puberty is a natural part of growing up. It’s the time when your body changes from a child to an adult. Learn about physical and emotional changes, and how to navigate them.
-      </p>
-      <Link href="/" className="text-blush-pink hover:underline">
-        Back to Home
-      </Link>
+    <div className="p-8 bg-cream-white min-h-screen text-center">
+      <h1 className="text-soft-blue text-4xl mb-4">{data.title}</h1>
+      <div
+        className="text-gray-700 whitespace-pre-line"
+        dangerouslySetInnerHTML={{ __html: data.content }}
+      />
     </div>
   );
-};
-
-export default PubertyPage;
+}

@@ -1,16 +1,27 @@
-// src/app/mental-wellness/page.tsx
-import Link from 'next/link';
+'use client'
+
+import { useEffect, useState } from 'react';
+import { fetchMentalWellness } from '../../utils/data/fetchMentalWellness';
 
 const MentalWellnessPage = () => {
+  const [data, setData] = useState({ title: '', content: '' });
+
+  useEffect(() => {
+    const getData = async () => {
+      const result = await fetchMentalWellness();
+      setData(result);
+    };
+
+    getData();
+  }, []);
+
   return (
-    <div className="p-8 bg-cream-white min-h-screen">
-      <h1 className="text-soft-blue text-3xl mb-4">Mental Wellness</h1>
-      <p className="text-gray-700 mb-4">
-        Mental wellness is crucial for a balanced life. Explore resources, strategies, and tips for maintaining mental health and well-being.
-      </p>
-      <Link href="/" className="text-blush-pink hover:underline">
-        Back to Home
-      </Link>
+    <div className="p-8 bg-cream-white min-h-screen text-center">
+      <h1 className="text-soft-blue text-4xl mb-4">{data.title}</h1>
+      <div
+        className="text-gray-700 whitespace-pre-line"
+        dangerouslySetInnerHTML={{ __html: data.content }}
+      />
     </div>
   );
 };

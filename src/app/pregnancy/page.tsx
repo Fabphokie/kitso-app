@@ -1,16 +1,28 @@
-// src/app/pregnancy/page.tsx
-import Link from 'next/link';
+'use client'
+
+import { useEffect, useState } from 'react';
+import { fetchPregnancy } from '../../utils/data/fetchPregnancy';
 
 const PregnancyPage = () => {
+  const [data, setData] = useState({ title: '', content: '' });
+
+  useEffect(() => {
+    const getData = async () => {
+      const result = await fetchPregnancy();
+      setData(result);
+    };
+
+    getData();
+  }, []);
+
   return (
-    <div className="p-8 bg-cream-white min-h-screen">
-      <h1 className="text-soft-blue text-3xl mb-4">Understanding Pregnancy</h1>
-      <p className="text-gray-700 mb-4">
-        Pregnancy is an exciting and transformative time. Discover information about prenatal care, health tips, and what to expect during pregnancy.
-      </p>
-      <Link href="/" className="text-blush-pink hover:underline">
-        Back to Home
-      </Link>
+    <div className="p-8 bg-cream-white min-h-screen text-center
+    ">
+      <h1 className="text-soft-blue text-4xl mb-4">{data.title}</h1>
+      <div
+        className="text-gray-700 whitespace-pre-line"
+        dangerouslySetInnerHTML={{ __html: data.content }}
+      />
     </div>
   );
 };
