@@ -1,4 +1,4 @@
-# Welcome to kitso.
+# Welcome to Kitso.
 
 <p>A comprehensive app about the journey from girlhood into womanhood.</p>
 
