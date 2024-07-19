@@ -9,7 +9,7 @@ export default function HomePage() {
           
         </div>
       </div>
-      <p className="text-lg mb-6 text-center">
+      <p className="text-lg mb-6 text-center text-pastel-pink">
         Your ultimate destination for knowledge, growth, and innovation.
       </p>
     
