@@ -19,10 +19,11 @@ export const fetchPuberty = async () => {
       `,
     };
   
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(data);
-      }, 1000);
-    });
-  };
+    return data;
+};
+
+
+
+
+
   

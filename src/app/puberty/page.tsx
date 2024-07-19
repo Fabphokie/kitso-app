@@ -5,15 +5,30 @@ import { fetchPuberty } from '../../utils/data/fetchPuberty';
 
 export default function PubertyPage() {
   const [data, setData] = useState({ title: '', content: '' });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const getData = async () => {
-      const result = await fetchPuberty();
-      setData(result);
+      try {
+        const result = await fetchPuberty();
+        if (result && typeof result === 'object' && result.title && result.content) {
+          setData(result);
+        } else {
+          throw new Error("Invalid data format");
+        }
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
     };
 
     getData();
   }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="p-8 bg-cream-white min-h-screen text-center">

@@ -1,19 +1,19 @@
-// utils/queryUtils.js
-import { getPubertyInfo } from './data/fetchPuberty';
-import { getPregnancyInfo } from './data/fetchPregnancy'; // Adjust the import paths as necessary
-import { getFamilyPlanningInfo } from './data/fetchFamilyPlanning';
-import { getMentalWellnessInfo } from './data/fetchMentalWellness';
+// src/utils/queryUtils.js
+import { fetchPuberty } from './data/fetchPuberty';
+import { fetchPregnancy } from './data/fetchPregnancy';
+import { fetchFamilyPlanning } from './data/fetchFamilyPlanning';
+import { fetchMentalWellness } from './data/fetchMentalWellness';
 
 export async function fetchResponse(question) {
   if (question.toLowerCase().includes('puberty')) {
-    return getPubertyInfo();
+    return await fetchPuberty();
   } else if (question.toLowerCase().includes('pregnancy')) {
-    return getPregnancyInfo();
+    return await fetchPregnancy();
   } else if (question.toLowerCase().includes('family planning')) {
-    return getFamilyPlanningInfo();
+    return await fetchFamilyPlanning();
   } else if (question.toLowerCase().includes('mental wellness')) {
-    return getMentalWellnessInfo();
+    return await fetchMentalWellness();
   } else {
-    return "I don't have an answer for that question.";
+    return { title: "No Data", content: "I don't have an answer for that question." };
   }
 }
