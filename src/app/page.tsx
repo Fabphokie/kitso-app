@@ -1,4 +1,5 @@
-
+'use client'
+import QueryComponent from "../components/QueryComponent"
 
 export default function HomePage() {
   return (
@@ -12,7 +13,7 @@ export default function HomePage() {
       <p className="text-lg mb-6 text-center text-pastel-green">
          Knowledge | Growth | Innovation
       </p>
-    
+       <QueryComponent/>
       <div className="w-full max-w-4xl">
         <div className="relative pb-9/16">
           <iframe
