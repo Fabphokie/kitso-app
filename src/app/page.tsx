@@ -4,7 +4,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-cream-white p-4">
       <div className="carousel mb-4">
-        <div className="carousel-text text-4xl font-bold text-pastel-green animate-marquee">
+        <div className="carousel-text text-5xl font-bold text-pastel-green animate-marquee">
           <span>Welcome to Kitso! </span>
           
         </div>

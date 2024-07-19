@@ -9,7 +9,6 @@
   --cream-white: #FFFDD0;
   --blush-pink: #FFD1DC;
 
-
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 255, 255, 255; /* Set to white */
   --background-end-rgb: 255, 255, 255;   /* Set to white */
@@ -82,4 +81,21 @@ footer {
 
 .button:hover {
   background-color: var(--soft-blue);
+}
+
+/* Add the marquee animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: marquee 15s linear infinite;
 }
