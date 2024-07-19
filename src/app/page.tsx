@@ -9,8 +9,8 @@ export default function HomePage() {
           
         </div>
       </div>
-      <p className="text-lg mb-6 text-center text-pastel-pink">
-        Your ultimate destination for knowledge, growth, and innovation.
+      <p className="text-lg mb-6 text-center text-pastel-green">
+         Knowledge | Growth | Innovation
       </p>
     
       <div style={{ width: "100%" }}>

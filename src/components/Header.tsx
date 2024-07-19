@@ -10,14 +10,14 @@ export default function Header() {
       <nav className="container mx-auto flex justify-between items-center">
         <div className="text-2xl font-bold flex items-center">
           <Link href="/" className="flex items-center">
-            <img src={logoUrl} alt="Kitso Logo" className="w-10 h-auto ml-2" />  {/* Adjust the width, height, and margin as needed */}
-            <span>K i t s o</span>
+            <img src={logoUrl} alt="Kitso Logo" className="w-12 h-auto ml-2" />  {/* Adjust the width, height, and margin as needed */}
+            <span>K i t s o.</span>
           </Link>
         </div>
         <div>
           <DropDownButton topics={topics} />
         </div>
-        <div className="space-x-4">
+        <div className="space-x-4 ">
           <Link href="/">Home</Link>
           <Link href="/about">About</Link>
           <Link href="/contact">Contact</Link>

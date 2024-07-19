@@ -21,7 +21,8 @@ const config: Config = {
           peach: '#FFDAB9',
           lilac: '#E6E6FA',
         },
-        creamWhite: '#FFFDD0', // Add cream white color here
+        creamWhite: '#FFFDD0', 
+        
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
