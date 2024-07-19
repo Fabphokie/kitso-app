@@ -13,15 +13,13 @@ export default function HomePage() {
          Knowledge | Growth | Innovation
       </p>
     
-      <div style={{ width: "100%" }}>
-        <div style={{ height: 0, paddingBottom: "56.25%", position: "relative", width: "100%" }}>
+      <div className="w-full max-w-4xl">
+        <div className="relative pb-9/16">
           <iframe
             allowFullScreen
             frameBorder="0"
-            height="600"
             src="https://giphy.com/embed/CHJAZ8hZUsH3yyBw4q/video"
-            style={{ height: '600px' }}
-            width="100%"
+            className="absolute top-0 left-0 w-full h-full"
           ></iframe>
         </div>
       </div>

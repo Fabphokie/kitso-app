@@ -78,6 +78,9 @@ footer {
   border: none;
   cursor: pointer;
 }
+.pb-9\/16 {
+  padding-bottom: 56.25%; /* 9/16 aspect ratio */
+}
 
 .button:hover {
   background-color: var(--soft-blue);
