@@ -14,6 +14,7 @@ export default function QueryComponent() {
 
   return (
     <div className="flex flex-col items-center p-4">
+      <nav className="space-x-4">
       <input
         type="text"
         placeholder="Ask me here..."
@@ -31,6 +32,8 @@ export default function QueryComponent() {
           <p>{response}</p>
         </div>
       )}
+      </nav>
+     
     </div>
   );
 }

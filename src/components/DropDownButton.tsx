@@ -20,7 +20,7 @@ const DropDownButton: React.FC<DropdownButtonProps> = ({ topics }) => {
         Topics
       </button>
       {open && (
-        <ul className="absolute right-0 bg-cream-white text-soft-blue mt-2 rounded shadow-lg border border-blue-300 text-center ">
+        <ul className="absolute right-0 bg-cream-white text-center text-soft-blue mt-2 rounded shadow-lg border border-blue-300  ">
           {topics.map((topic) => (
             <li key={topic} className="px-4 py-2 hover:bg-soft-blue hover:text-cream-white">
               <Link href={`/${topic.toLowerCase().replace(/ /g, '-')}`}>
