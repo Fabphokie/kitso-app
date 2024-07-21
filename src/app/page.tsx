@@ -7,7 +7,8 @@ export default function HomePage() {
       
       <div className="carousel mb-4">
         <div className="carousel-text text-4xl font-bold text-pastel-green animate-marquee">
-          <span> Knowledge | Growth | Innovation </span>
+        <span> Knowledge | Growth | Empowerment | Transformation | Confidence | Well-being</span>
+
           
         </div>
       </div>
