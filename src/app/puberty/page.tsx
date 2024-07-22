@@ -1,7 +1,7 @@
-'use client'
+// pages/puberty.js
+'use client';
 
 import { useEffect, useState } from 'react';
-import { fetchPuberty } from '../../utils/data/fetchPuberty';
 
 export default function PubertyPage() {
   const [data, setData] = useState({ title: '', content: '' });
@@ -11,7 +11,11 @@ export default function PubertyPage() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const result = await fetchPuberty();
+        const response = await fetch('/api/data');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
         if (result && typeof result === 'object' && result.title && result.content) {
           setData(result);
         } else {
