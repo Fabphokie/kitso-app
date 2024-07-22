@@ -1,4 +1,5 @@
-// pages/puberty.js
+// src/app/pages/puberty/page.js
+
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -11,7 +12,7 @@ export default function PubertyPage() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch('/api/data');
+        const response = await fetch('/api/puberty');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

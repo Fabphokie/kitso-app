@@ -1,19 +1,39 @@
-'use client'
+// src/app/pages/mental-wellness/page.js
+
+'use client';
 
 import { useEffect, useState } from 'react';
-import { fetchMentalWellness } from '../../utils/data/fetchMentalWellness';
 
-const MentalWellnessPage = () => {
+export default function MentalWellnessPage() {
   const [data, setData] = useState({ title: '', content: '' });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const getData = async () => {
-      const result = await fetchMentalWellness();
-      setData(result);
+      try {
+        const response = await fetch('/api/mental-wellness');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
+        if (result && typeof result === 'object' && result.title && result.content) {
+          setData(result);
+        } else {
+          throw new Error("Invalid data format");
+        }
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
     };
 
     getData();
   }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="p-8 bg-cream-white min-h-screen text-center">
@@ -24,6 +44,4 @@ const MentalWellnessPage = () => {
       />
     </div>
   );
-};
-
-export default MentalWellnessPage;
+}
