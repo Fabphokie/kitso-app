@@ -1,14 +1,17 @@
-// src/app/pages/family-planning/page.js
-
-'use client';
+// src/app/family-planning/page.tsx
+'use client'; // Ensure this component is rendered client-side
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation'; // Correct import for client components
 
 export default function FamilyPlanningPage() {
   const [data, setData] = useState({ title: '', content: '' });
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
+  const [highlightedContent, setHighlightedContent] = useState<string>('');
+  const router = useRouter(); // UseRouter for client-side navigation
 
+  // Fetch data on component mount
   useEffect(() => {
     const getData = async () => {
       try {
@@ -19,8 +22,9 @@ export default function FamilyPlanningPage() {
         const result = await response.json();
         if (result && typeof result === 'object' && result.title && result.content) {
           setData(result);
+          setHighlightedContent(result.content); // Initial content without highlighting
         } else {
-          throw new Error("Invalid data format");
+          throw new Error('Invalid data format');
         }
       } catch (error) {
         setError(error.message);
@@ -32,6 +36,20 @@ export default function FamilyPlanningPage() {
     getData();
   }, []);
 
+  // Highlight text based on query parameters
+  useEffect(() => {
+    // Ensure router.query and router.query.highlight are defined
+    if (router.query && router.query.highlight) {
+      const highlightText = decodeURIComponent(router.query.highlight as string);
+      console.log('Highlighting:', highlightText); // Debug: check highlight text
+      if (highlightText) {
+        const regex = new RegExp(`(${highlightText})`, 'gi');
+        const newHighlightedContent = data.content.replace(regex, '<mark>$1</mark>');
+        setHighlightedContent(newHighlightedContent);
+      }
+    }
+  }, [router.query, data.content]); // Watch for changes in both router.query and data.content
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -40,7 +58,7 @@ export default function FamilyPlanningPage() {
       <h1 className="text-soft-blue text-4xl mb-4">{data.title}</h1>
       <div
         className="text-gray-700 whitespace-pre-line"
-        dangerouslySetInnerHTML={{ __html: data.content }}
+        dangerouslySetInnerHTML={{ __html: highlightedContent }}
       />
     </div>
   );

@@ -1,20 +1,36 @@
-import { useState } from "react";
-import { fetchResponse } from "../utils/queryUtils";  // Adjust the path as necessary
+// src/components/QueryComponent.tsx
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation'; // Use the correct import path for your Next.js version
+import { fetchResponse } from '../utils/queryUtils';  // Adjust the path as necessary
 
 export default function QueryComponent() {
-  const [question, setQuestion] = useState("");
-  const [response, setResponse] = useState("");
-  const [highlight, setHighlight] = useState(false);
+  const [question, setQuestion] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const router = useRouter(); // Ensure this is in a client-side component
 
   const handleSubmit = async () => {
-    const result = await fetchResponse(question);
-    setResponse(result);
-    setHighlight(question.toLowerCase().includes('puberty')); // Example highlight condition
+    setLoading(true);
+    setError('');
+    try {
+      const result = await fetchResponse(question);
+      
+      // Assuming 'result' contains 'pageUrl' and 'highlight' fields
+      const highlightQuery = encodeURIComponent(question); // Encode the query for URL
+      const highlightUrl = `${result.pageUrl}?highlight=${highlightQuery}`;
+      
+      router.push(highlightUrl); // Navigate to the page with the highlight query
+    } catch (err) {
+      setError('Failed to fetch data. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="flex flex-col items-center p-4">
-      <nav className="space-x-4">
       <input
         type="text"
         placeholder="Ask me here..."
@@ -22,18 +38,15 @@ export default function QueryComponent() {
         onChange={(e) => setQuestion(e.target.value)}
         className="border p-2 mb-4"
       />
-      <button onClick={handleSubmit} className="button">
-        Submit
+      <button
+        onClick={handleSubmit}
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+        aria-label="Submit question"
+        disabled={loading}
+      >
+        {loading ? 'Loading...' : 'Submit'}
       </button>
-      {response && (
-        <div
-          className={`mt-4 p-2 border ${highlight ? 'border-yellow-500 bg-yellow-100' : 'border-gray-300 bg-white'} rounded`}
-        >
-          <p>{response}</p>
-        </div>
-      )}
-      </nav>
-     
+      {error && <div className="text-red-500 mt-2">{error}</div>}
     </div>
   );
 }
