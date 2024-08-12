@@ -25,7 +25,7 @@ export default function PubertyPage() {
       } catch (error) {
         setError(error.message);
       } finally {
-        setLoading(false);
+        setLoading(false);  
       }
     };
 
