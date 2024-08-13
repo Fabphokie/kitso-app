@@ -27,7 +27,11 @@ export default function FamilyPlanningPage() {
           throw new Error('Invalid data format');
         }
       } catch (error) {
-        setError(error.message);
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError("An unknown error occured");
+        }
       } finally {
         setLoading(false);
       }
