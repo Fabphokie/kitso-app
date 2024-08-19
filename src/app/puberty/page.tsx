@@ -42,6 +42,7 @@ export default function PubertyPage() {
         className="text-gray-700 whitespace-pre-line"
         dangerouslySetInnerHTML={{ __html: data.content }}
       />
+      <h2>{data.methods}</h2>
     </div>
   );
 }

@@ -64,6 +64,16 @@ export default function FamilyPlanningPage() {
         className="text-gray-700 whitespace-pre-line"
         dangerouslySetInnerHTML={{ __html: highlightedContent }}
       />
+      
+      <img src={data.image} alt={data.title} className='w-10% h-auto mx-auto'/>
+
+      <h2 className="text-soft-blue text-2xl mb-2">Methods :</h2>
+      <ol  className="text-gray-700 whitespace-pre-line">
+        {data.methods.map((method,index) =>(
+          <li key={index}>- {method}</li>
+        ))}
+      </ol>
+      
     </div>
   );
 }
