@@ -1,11 +1,16 @@
-// src/app/family-planning/page.tsx
 'use client'; // Ensure this component is rendered client-side
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation'; // Correct import for client components
 
 export default function FamilyPlanningPage() {
-  const [data, setData] = useState({ title: '', content: '' });
+  const [data, setData] = useState<{ title: string; content: string; image: string; methods: { [key: string]: { name: string; image: string } }; information: string[] }>({
+    title: '',
+    content: '',
+    image: '',
+    methods: {},
+    information: []
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [highlightedContent, setHighlightedContent] = useState<string>('');
@@ -30,7 +35,7 @@ export default function FamilyPlanningPage() {
         if (error instanceof Error) {
           setError(error.message);
         } else {
-          setError("An unknown error occured");
+          setError("An unknown error occurred");
         }
       } finally {
         setLoading(false);
@@ -42,7 +47,6 @@ export default function FamilyPlanningPage() {
 
   // Highlight text based on query parameters
   useEffect(() => {
-    // Ensure router.query and router.query.highlight are defined
     if (router.query && router.query.highlight) {
       const highlightText = decodeURIComponent(router.query.highlight as string);
       console.log('Highlighting:', highlightText); // Debug: check highlight text
@@ -65,15 +69,24 @@ export default function FamilyPlanningPage() {
         dangerouslySetInnerHTML={{ __html: highlightedContent }}
       />
       
-      <img src={data.image} alt={data.title} className='w-10% h-auto mx-auto'/>
+      {data.image && <img src={data.image} alt={data.title} className='w-10% h-auto mx-auto' />}
 
       <h2 className="text-soft-blue text-2xl mb-2">Methods :</h2>
-      <ol  className="text-gray-700 whitespace-pre-line">
-        {data.methods.map((method,index) =>(
-          <li key={index}>- {method}</li>
+      <div className="flex flex-wrap justify-center gap-4">
+        {Object.entries(data.methods).map(([key, method]) => (
+          <div key={key} className="flex flex-col items-center text-gray-700">
+            <img src={method.image} alt={method.name} className="w-24 h-24 object-cover mb-2" />
+            <p>{method.name}</p>
+          </div>
+        ))}
+      </div>
+
+      <h2 className="text-soft-blue text-2xl mb-2">Information on Methods</h2>
+      <ol className="text-gray-700 whitespace-pre-line">
+        {data.information.map((info, index) => (
+          <li key={index}>- {info}</li>
         ))}
       </ol>
-      
     </div>
   );
 }
