@@ -1,22 +1,25 @@
-'use client'; // Ensure this component is rendered client-side
+'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation'; // Correct import for client components
 
 export default function FamilyPlanningPage() {
-  const [data, setData] = useState<{ title: string; content: string; image: string; methods: { [key: string]: { name: string; image: string } }; information: string[] }>({
+  const [data, setData] = useState<{
+    title: string;
+    content: string;
+    image: string;
+    methods: { [key: string]: { name: string; image: string } };
+    information: string[];
+  }>({
     title: '',
     content: '',
     image: '',
     methods: {},
-    information: []
+    information: [], // Ensure this is an array initially
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [highlightedContent, setHighlightedContent] = useState<string>('');
-  const router = useRouter(); // UseRouter for client-side navigation
 
-  // Fetch data on component mount
   useEffect(() => {
     const getData = async () => {
       try {
@@ -45,31 +48,17 @@ export default function FamilyPlanningPage() {
     getData();
   }, []);
 
-  // Highlight text based on query parameters
-  useEffect(() => {
-    if (router.query && router.query.highlight) {
-      const highlightText = decodeURIComponent(router.query.highlight as string);
-      console.log('Highlighting:', highlightText); // Debug: check highlight text
-      if (highlightText) {
-        const regex = new RegExp(`(${highlightText})`, 'gi');
-        const newHighlightedContent = data.content.replace(regex, '<mark>$1</mark>');
-        setHighlightedContent(newHighlightedContent);
-      }
-    }
-  }, [router.query, data.content]); // Watch for changes in both router.query and data.content
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="p-8 bg-cream-white min-h-screen text-center">
       <h1 className="text-soft-blue text-4xl mb-4">{data.title}</h1>
+      {data.image && <img src={data.image} alt={data.title} className="w-100 h-24 text-center" />}
       <div
         className="text-gray-700 whitespace-pre-line"
         dangerouslySetInnerHTML={{ __html: highlightedContent }}
       />
-      
-      {data.image && <img src={data.image} alt={data.title} className='w-10% h-auto mx-auto' />}
 
       <h2 className="text-soft-blue text-2xl mb-2">Methods :</h2>
       <div className="flex flex-wrap justify-center gap-4">
@@ -83,9 +72,13 @@ export default function FamilyPlanningPage() {
 
       <h2 className="text-soft-blue text-2xl mb-2">Information on Methods</h2>
       <ol className="text-gray-700 whitespace-pre-line">
-        {data.information.map((info, index) => (
-          <li key={index}>- {info}</li>
-        ))}
+        {data.information && data.information.length > 0 ? (
+          data.information.map((info, index) => (
+            <li key={index}>- {info}</li>
+          ))
+        ) : (
+          <li>No information available</li>
+        )}
       </ol>
     </div>
   );
