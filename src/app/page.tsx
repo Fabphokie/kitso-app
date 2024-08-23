@@ -60,7 +60,7 @@ export default function HomePage() {
             src={carouselItems[currentIndex].image}
             alt={carouselItems[currentIndex].text}
             className="rounded-lg shadow-lg"
-            style={{ width: '500px', height: '500px', objectFit: 'cover' }}
+            style={{ width: '400px', height: '400px', objectFit: 'cover' }}
           />
         </div>
         <div className="carousel-controls absolute inset-0 flex justify-between items-center p-4">
