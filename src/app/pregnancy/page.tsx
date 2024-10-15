@@ -72,8 +72,8 @@ export default function PregnancyPage() {
       {data.image && (
         <img src={data.image} alt="Pregnancy" className="mb-8 mx-auto w-full max-w-lg rounded-lg" />
       )}
-      <h2 className="text-2xl font-bold mb-4">Information</h2>
-      <ul className="list-disc list-inside mb-8">
+      <h2 className="text-soft-blue text-2xl font-bold mb-4">Information</h2>
+      <ul className="text-gray-700 list-disc list-inside mb-8">
         {data.information.length > 0 ? (
           data.information.map((info, index) => (
             <li key={index} className="mb-2">{info}</li>
@@ -82,8 +82,8 @@ export default function PregnancyPage() {
           <li>No additional information available.</li>
         )}
       </ul>
-      <h2 className="text-2xl font-bold mb-4">Key Features</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+      <h2 className="text-soft-blue text-2xl font-bold mb-4">Key Features</h2>
+      <div className="text-gray-700 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
         {Object.values(data.key_feature).map((feature, index) => (
           <div key={index} className="text-left">
             <img src={feature.image} alt={feature.name} className="mb-2 w-full h-48 object-cover rounded-md" />
@@ -92,8 +92,8 @@ export default function PregnancyPage() {
           </div>
         ))}
       </div>
-      <h2 className="text-2xl font-bold mb-4">Stages of Pregnancy</h2>
-      <div className="mb-8">
+      <h2 className="text-soft-blue text-2xl font-bold mb-4">Stages of Pregnancy</h2>
+      <div className="text-gray-700 mb-8">
         {Object.entries(data.Stages).map(([stage, details], index) => (
           <div key={index} className="mb-4">
             <h3 className="font-bold text-xl">{stage.replace('_', ' ')}</h3>
@@ -106,8 +106,8 @@ export default function PregnancyPage() {
           </div>
         ))}
       </div>
-      <h2 className="text-2xl font-bold mb-4">Signs and Symptoms</h2>
-      <ul className="list-disc list-inside">
+      <h2 className="text-soft-blue text-2xl font-bold mb-4">Signs and Symptoms</h2>
+      <ul className="text-gray-700 list-disc list-inside">
         {data.signs_and_symptoms.length > 0 ? (
           data.signs_and_symptoms.map((symptom, index) => (
             <li key={index} className="mb-2">{symptom}</li>

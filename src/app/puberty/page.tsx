@@ -41,12 +41,12 @@ export default function PubertyPage() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="p-8 bg-cream-white min-h-screen text-center">
+    <div className="p-8 bg-cream-white text-gray-700 min-h-screen text-center">
       <h1 className="text-soft-blue text-4xl mb-4">{data.title}</h1>
       <div className="text-gray-700 whitespace-pre-line mb-8">
         {data.content}
       </div>
-      <h2 className="text-2xl font-bold mb-4">Information</h2>
+      <h2 className="text-2xl text-soft-blue font-bold mb-4">Information</h2>
       <ul className="list-disc list-inside">
         {data.information && data.information.length > 0 ? (
           data.information.map((info, index) => (
@@ -57,7 +57,7 @@ export default function PubertyPage() {
         )}
       </ul>
 
-      <h2 className="text-2xl font-bold mb-4">Signs and Symptoms</h2>
+      <h2 className="text-soft-blue font-bold mb-4">Signs and Symptoms</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {[data.signs_and_symptoms, data.sign2, data.sign3, data.sign4, data.sign5].map((sign, index) => (
           <div key={index} className="text-left">
