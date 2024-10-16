@@ -27,36 +27,36 @@ export default function MentalWellnessPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await fetch('/api/mental-wellness');
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const result: MentalWellnessData = await response.json();
-        // Ensure that result has the correct structure
-        setData({
-          title: result.title || '',
-          content: result.content || '',
-          information: Array.isArray(result.information) ? result.information : [],
-          Key_features: result.Key_features || {},
-          signs_and_symptoms: Array.isArray(result.signs_and_symptoms) ? result.signs_and_symptoms : [],
-        });
-      } catch (error) {
-        setError(error instanceof Error ? error.message : "An unknown error occurred.");
-      } finally {
-        setLoading(false);
+  const getData = async () => {
+    try {
+      const response = await fetch('/api/mental-wellness');
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-    };
+      const result: MentalWellnessData = await response.json();
+      // Ensure that result has the correct structure
+      setData({
+        title: result.title || '',
+        content: result.content || '',
+        information: Array.isArray(result.information) ? result.information : [],
+        Key_features: result.Key_features || {},
+        signs_and_symptoms: Array.isArray(result.signs_and_symptoms) ? result.signs_and_symptoms : [],
+      });
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "An unknown error occurred.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     getData();
   }, []);
 
   const retryFetch = () => {
     setError(null);
     setLoading(true);
-    getData();
+    getData(); // Call the getData function here
   };
 
   if (loading) return <div className="flex justify-center items-center min-h-screen"><span className="text-soft-blue">Loading...</span></div>;
