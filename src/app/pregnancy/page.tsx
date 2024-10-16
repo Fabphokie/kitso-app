@@ -59,8 +59,8 @@ export default function PregnancyPage() {
     getData();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <div className="flex justify-center items-center min-h-screen"><span className="text-soft-blue">Loading...</span></div>;
+  if (error) return <div className="p-8 text-red-500">Error: {error}. Please try again later.</div>;
 
   return (
     <div className="p-8 bg-cream-white min-h-screen text-center">

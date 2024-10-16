@@ -1,14 +1,28 @@
-// src/app/pages/puberty/page.js
-
 'use client';
 
 import { useEffect, useState } from 'react';
 
+interface Sign {
+  description: string;
+  image: string;
+}
+
+interface PubertyData {
+  title: string;
+  content: string;
+  information: string[];
+  sign2: Sign;
+  sign3: Sign;
+  sign4: Sign;
+  sign5: Sign;
+  signs_and_symptoms: Sign;
+}
+
 export default function PubertyPage() {
-  const [data, setData] = useState({
+  const [data, setData] = useState<PubertyData>({
     title: '',
     content: '',
-    information: [], // Initialize as an empty array to avoid undefined
+    information: [],
     sign2: { description: '', image: '' },
     sign3: { description: '', image: '' },
     sign4: { description: '', image: '' },
@@ -16,7 +30,7 @@ export default function PubertyPage() {
     signs_and_symptoms: { description: '', image: '' }
   });
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const getData = async () => {
@@ -25,10 +39,11 @@ export default function PubertyPage() {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const result = await response.json();
+        const result: PubertyData = await response.json();
         setData(result);
       } catch (error) {
-        setError(error.message);
+        console.error('Fetching error:', error); // Log the error for debugging
+        setError((error as Error).message);
       } finally {
         setLoading(false);
       }

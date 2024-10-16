@@ -31,35 +31,41 @@ export default function HomePage() {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false); // Track hover state
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) =>
-        prevIndex === carouselItems.length - 1 ? 0 : prevIndex + 1
-      );
+      if (!isHovered) { // Only change slide if not hovered
+        setCurrentIndex((prevIndex) =>
+          prevIndex === carouselItems.length - 1 ? 0 : prevIndex + 1
+        );
+      }
     }, 3000); // Change slide every 3 seconds
 
     return () => clearInterval(interval); // Clear interval on component unmount
-  }, []);
+  }, [isHovered]); // Depend on hover state
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-cream-white p-4">
       <header className="w-full max-w-4xl text-center mb-8">
         <h1 className="text-4xl font-bold text-pastel-green">Navigating Girlhood to Womanhood</h1>
-    
       </header>
 
       <QueryComponent />
-      
+
       <div className="carousel-container w-full max-w-4xl mb-8 relative text-center">
         <div className="carousel-text text-4xl font-bold text-pastel-green mb-4">
           {carouselItems[currentIndex].text}
         </div>
-        <div className="carousel-image relative w-full flex justify-center">
+        <div
+          className="carousel-image relative w-full flex justify-center"
+          onMouseEnter={() => setIsHovered(true)} // Pause on hover
+          onMouseLeave={() => setIsHovered(false)}
+        >
           <img
             src={carouselItems[currentIndex].image}
             alt={carouselItems[currentIndex].text}
-            className="rounded-lg shadow-lg"
+            className="rounded-lg shadow-lg transition-all duration-300" // Add smooth transition
             style={{ width: '400px', height: '400px', objectFit: 'cover' }}
           />
         </div>
@@ -86,10 +92,6 @@ export default function HomePage() {
           </button>
         </div>
       </div>
-      
-     
-
-      
     </div>
   );
 }

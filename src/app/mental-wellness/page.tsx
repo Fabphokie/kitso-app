@@ -2,13 +2,27 @@
 
 import { useEffect, useState } from 'react';
 
+interface KeyFeature {
+  name: string;
+  image: string;
+  info: string;
+}
+
+interface MentalWellnessData {
+  title: string;
+  content: string;
+  information: string[];
+  Key_features: { [key: string]: KeyFeature };
+  signs_and_symptoms: string[];
+}
+
 export default function MentalWellnessPage() {
-  const [data, setData] = useState({
+  const [data, setData] = useState<MentalWellnessData>({
     title: '',
     content: '',
     information: [],
     Key_features: {},
-    signs_and_symptoms: []  // Ensure this is initialized as an empty array
+    signs_and_symptoms: [], // Initialize as an empty array
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -20,17 +34,17 @@ export default function MentalWellnessPage() {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        const result = await response.json();
+        const result: MentalWellnessData = await response.json();
         // Ensure that result has the correct structure
         setData({
           title: result.title || '',
           content: result.content || '',
           information: Array.isArray(result.information) ? result.information : [],
           Key_features: result.Key_features || {},
-          signs_and_symptoms: Array.isArray(result.signs_and_symptoms) ? result.signs_and_symptoms : []
+          signs_and_symptoms: Array.isArray(result.signs_and_symptoms) ? result.signs_and_symptoms : [],
         });
       } catch (error) {
-        setError(error.message);
+        setError(error instanceof Error ? error.message : "An unknown error occurred.");
       } finally {
         setLoading(false);
       }
@@ -43,7 +57,7 @@ export default function MentalWellnessPage() {
   if (error) return <div className="p-8 text-red-500">Error: {error}</div>;
 
   return (
-    <div className="p-8 bg-cream-white min-h-screen text-center">
+    <div className="p-8 bg-cream-white min-h-screen text-center" aria-live="polite">
       <h1 className="text-soft-blue text-4xl mb-4">{data.title}</h1>
       <p className="text-gray-700 mb-6">{data.content}</p>
 
@@ -59,7 +73,7 @@ export default function MentalWellnessPage() {
       <div className="text-gray-700 mb-8">
         <h2 className="text-soft-blue text-2xl mb-2">Key Features</h2>
         {Object.entries(data.Key_features).map(([key, feature], index) => (
-          <div key={index} className="mb-6">
+          <div key={key} className="mb-6">
             <img src={feature.image} alt={feature.name} className="w-32 h-32 object-cover mx-auto mb-2" />
             <h3 className="text-soft-blue text-xl">{feature.name}</h3>
             <p>{feature.info}</p>
@@ -70,7 +84,7 @@ export default function MentalWellnessPage() {
       <div className="text-gray-700">
         <h2 className="text-soft-blue text-2xl mb-2">Signs and Symptoms</h2>
         <ul className="list-disc list-inside">
-          {Array.isArray(data.signs_and_symptoms) && data.signs_and_symptoms.length > 0 ? (
+          {data.signs_and_symptoms.length > 0 ? (
             data.signs_and_symptoms.map((symptom, index) => (
               <li key={index} className="mb-2">{symptom}</li>
             ))
