@@ -41,7 +41,7 @@ export default function PregnancyPage() {
       try {
         const response = await fetch('/api/pregnancy');
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const result: PregnancyData = await response.json();
         if (result && typeof result === 'object' && result.title && result.content) {
@@ -59,8 +59,21 @@ export default function PregnancyPage() {
     getData();
   }, []);
 
-  if (loading) return <div className="flex justify-center items-center min-h-screen"><span className="text-soft-blue">Loading...</span></div>;
-  if (error) return <div className="p-8 text-red-500">Error: {error}. Please try again later.</div>;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <span className="text-soft-blue">Loading...</span>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-8 text-red-500">
+        Error: {error}. Please try again later.
+      </div>
+    );
+  }
 
   return (
     <div className="p-8 bg-cream-white min-h-screen text-center">

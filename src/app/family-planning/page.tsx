@@ -21,42 +21,55 @@ export default function FamilyPlanningPage() {
     content: '',
     image: '',
     methods: {},
-    information: [], // Ensure this is an array initially
+    information: [],
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [highlightedContent, setHighlightedContent] = useState<string>('');
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await fetch('/api/family-planning');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const result: FamilyPlanningData = await response.json();
-        if (result && typeof result === 'object' && result.title && result.content) {
-          setData(result);
-          setHighlightedContent(result.content); // Initial content without highlighting
-        } else {
-          throw new Error('Invalid data format');
-        }
-      } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message);
-        } else {
-          setError("An unknown error occurred");
-        }
-      } finally {
-        setLoading(false);
+  const getData = async () => {  // Move getData outside of useEffect
+    try {
+      const response = await fetch('/api/family-planning');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    };
+      const result: FamilyPlanningData = await response.json();
+      if (result && typeof result === 'object' && result.title && result.content) {
+        setData(result);
+        setHighlightedContent(result.content);
+      } else {
+        throw new Error('Invalid data format');
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unknown error occurred");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    getData();
+  useEffect(() => {
+    getData(); // Call getData on mount
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  const retryFetch = () => {
+    setError(null);
+    setLoading(true);
+    getData(); // Now getData is accessible here
+  };
+
+  if (loading) return <div className="loader">Loading...</div>; // Add a spinner or loader
+  if (error) return (
+    <div>
+      <p>Error: {error}</p>
+      <button onClick={retryFetch} className="text-soft-blue underline">
+        Retry
+      </button>
+    </div>
+  );
 
   return (
     <div className="p-8 bg-cream-white min-h-screen text-center" aria-live="polite">

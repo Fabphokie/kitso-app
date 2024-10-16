@@ -22,7 +22,7 @@ export default function MentalWellnessPage() {
     content: '',
     information: [],
     Key_features: {},
-    signs_and_symptoms: [], // Initialize as an empty array
+    signs_and_symptoms: [],
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -53,8 +53,21 @@ export default function MentalWellnessPage() {
     getData();
   }, []);
 
+  const retryFetch = () => {
+    setError(null);
+    setLoading(true);
+    getData();
+  };
+
   if (loading) return <div className="flex justify-center items-center min-h-screen"><span className="text-soft-blue">Loading...</span></div>;
-  if (error) return <div className="p-8 text-red-500">Error: {error}</div>;
+  if (error) return (
+    <div className="p-8 text-red-500 text-center">
+      <p>Error: {error}</p>
+      <button onClick={retryFetch} className="mt-4 text-soft-blue underline">
+        Retry
+      </button>
+    </div>
+  );
 
   return (
     <div className="p-8 bg-cream-white min-h-screen text-center" aria-live="polite">
@@ -72,7 +85,7 @@ export default function MentalWellnessPage() {
 
       <div className="text-gray-700 mb-8">
         <h2 className="text-soft-blue text-2xl mb-2">Key Features</h2>
-        {Object.entries(data.Key_features).map(([key, feature], index) => (
+        {Object.entries(data.Key_features).map(([key, feature]) => (
           <div key={key} className="mb-6">
             <img src={feature.image} alt={feature.name} className="w-32 h-32 object-cover mx-auto mb-2" />
             <h3 className="text-soft-blue text-xl">{feature.name}</h3>

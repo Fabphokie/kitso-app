@@ -42,7 +42,7 @@ export default function PubertyPage() {
         const result: PubertyData = await response.json();
         setData(result);
       } catch (error) {
-        console.error('Fetching error:', error); // Log the error for debugging
+        console.error('Fetching error:', error);
         setError((error as Error).message);
       } finally {
         setLoading(false);
@@ -52,18 +52,16 @@ export default function PubertyPage() {
     getData();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <div className="flex justify-center items-center min-h-screen"><span className="text-soft-blue">Loading...</span></div>;
+  if (error) return <div className="p-8 text-red-500">Error: {error}</div>;
 
   return (
     <div className="p-8 bg-cream-white text-gray-700 min-h-screen text-center">
       <h1 className="text-soft-blue text-4xl mb-4">{data.title}</h1>
-      <div className="text-gray-700 whitespace-pre-line mb-8">
-        {data.content}
-      </div>
+      <div className="text-gray-700 whitespace-pre-line mb-8">{data.content}</div>
       <h2 className="text-2xl text-soft-blue font-bold mb-4">Information</h2>
       <ul className="list-disc list-inside">
-        {data.information && data.information.length > 0 ? (
+        {Array.isArray(data.information) && data.information.length > 0 ? (
           data.information.map((info, index) => (
             <li key={index} className="mb-2">{info}</li>
           ))
@@ -77,7 +75,7 @@ export default function PubertyPage() {
         {[data.signs_and_symptoms, data.sign2, data.sign3, data.sign4, data.sign5].map((sign, index) => (
           <div key={index} className="text-left">
             {sign.image && (
-              <img src={sign.image} alt={`Sign ${index + 1}`} className="mb-2 w-full h-48 object-cover rounded-md" />
+              <img src={sign.image} alt={`Sign ${index + 2}`} className="mb-2 w-full h-48 object-cover rounded-md" />
             )}
             <p>{sign.description}</p>
           </div>
