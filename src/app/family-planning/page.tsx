@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image'; // Import the Image component
 
 interface Method {
   name: string;
@@ -27,7 +28,7 @@ export default function FamilyPlanningPage() {
   const [error, setError] = useState<string | null>(null);
   const [highlightedContent, setHighlightedContent] = useState<string>('');
 
-  const getData = async () => {  // Move getData outside of useEffect
+  const getData = async () => {
     try {
       const response = await fetch('/api/family-planning');
       if (!response.ok) {
@@ -74,17 +75,31 @@ export default function FamilyPlanningPage() {
   return (
     <div className="p-8 bg-cream-white min-h-screen text-center" aria-live="polite">
       <h1 className="text-soft-blue text-4xl mb-4">{data.title}</h1>
-      {data.image && <img src={data.image} alt={data.title} className="w-100 h-24 mx-auto" />}
+      {data.image && (
+        <Image
+          src={data.image}
+          alt={data.title}
+          width={100} // Set the width as per your requirement
+          height={100} // Set the height as per your requirement
+          className="mx-auto"
+        />
+      )}
       <div
         className="text-gray-700 whitespace-pre-line"
-        dangerouslySetInnerHTML={{ __html: highlightedContent }}
+        dangerouslySetInnerHTML={{ __html: highlightedContent.replace(/'/g, "&apos;") }} // Escape apostrophes
       />
 
       <h2 className="text-soft-blue text-2xl mb-2">Methods:</h2>
       <div className="flex flex-wrap justify-center gap-4">
         {Object.entries(data.methods).map(([key, method]) => (
           <div key={key} className="flex flex-col items-center text-gray-700">
-            <img src={method.image} alt={method.name} className="w-24 h-24 object-cover mb-2" />
+            <Image
+              src={method.image}
+              alt={method.name}
+              width={96} // Set the width for optimized loading
+              height={96} // Set the height for optimized loading
+              className="object-cover mb-2"
+            />
             <p className="text-center">{method.name}</p>
           </div>
         ))}

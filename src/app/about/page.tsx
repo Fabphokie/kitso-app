@@ -8,7 +8,7 @@ export default function AboutPage() {
         Kitso is dedicated to providing valuable resources and support for individuals transitioning from girlhood to womanhood. Our platform aims to empower and educate by offering comprehensive information on crucial topics such as puberty, pregnancy, family planning, and mental wellness.
       </p>
       <p className='text-gray-700 mb-4'>
-        Our mission is to create a safe and accessible space where users can find trustworthy and relevant information. Whether you're looking for guidance on managing puberty, understanding family planning options, or seeking mental wellness support, Kitso is here to help.
+        Our mission is to create a safe and accessible space where users can find trustworthy and relevant information. Whether you&apos;re looking for guidance on managing puberty, understanding family planning options, or seeking mental wellness support, Kitso is here to help.
       </p>
       <p className='text-gray-700 mb-4'>
         At Kitso, we honor the timeless wisdom passed down through generations, particularly the knowledge shared by our grandmothers. We strive to preserve and incorporate this invaluable guidance into our resources, ensuring that traditional wisdom complements modern understanding. By bridging the past with the present, we aim to provide a holistic approach to navigating life’s transitions.

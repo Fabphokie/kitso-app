@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image'; // Import the Image component
 
 interface KeyFeature {
   name: string;
@@ -59,7 +60,11 @@ export default function MentalWellnessPage() {
     getData(); // Call the getData function here
   };
 
-  if (loading) return <div className="flex justify-center items-center min-h-screen"><span className="text-soft-blue">Loading...</span></div>;
+  if (loading) return (
+    <div className="flex justify-center items-center min-h-screen">
+      <span className="text-soft-blue">Loading...</span>
+    </div>
+  );
   if (error) return (
     <div className="p-8 text-red-500 text-center">
       <p>Error: {error}</p>
@@ -87,7 +92,13 @@ export default function MentalWellnessPage() {
         <h2 className="text-soft-blue text-2xl mb-2">Key Features</h2>
         {Object.entries(data.Key_features).map(([key, feature]) => (
           <div key={key} className="mb-6">
-            <img src={feature.image} alt={feature.name} className="w-32 h-32 object-cover mx-auto mb-2" />
+            <Image
+              src={feature.image}
+              alt={feature.name}
+              width={128} // Adjust width as needed
+              height={128} // Adjust height as needed
+              className="object-cover mx-auto mb-2"
+            />
             <h3 className="text-soft-blue text-xl">{feature.name}</h3>
             <p>{feature.info}</p>
           </div>

@@ -36,7 +36,7 @@ export default function QueryComponent() {
 
   return (
     <div className="flex flex-col items-center p-4 max-w-lg mx-auto">
-      <div className="flex w-full">
+      <div className="flex w-full text-black">
         <input
           type="text"
           placeholder="Ask me here..."

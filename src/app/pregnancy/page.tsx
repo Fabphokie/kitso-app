@@ -36,28 +36,34 @@ export default function PregnancyPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await fetch('/api/pregnancy');
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const result: PregnancyData = await response.json();
-        if (result && typeof result === 'object' && result.title && result.content) {
-          setData(result);
-        } else {
-          throw new Error("Invalid data format");
-        }
-      } catch (error) {
-        setError((error as Error).message);
-      } finally {
-        setLoading(false);
+  const getData = async () => {
+    setLoading(true);
+    setError(null); // Reset error state before fetching data
+    try {
+      const response = await fetch('/api/pregnancy');
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-    };
+      const result: PregnancyData = await response.json();
+      if (result && typeof result === 'object' && result.title && result.content) {
+        setData(result);
+      } else {
+        throw new Error("Invalid data format");
+      }
+    } catch (error) {
+      setError((error as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     getData();
   }, []);
+
+  const retryFetch = () => {
+    getData(); // Call the getData function again
+  };
 
   if (loading) {
     return (
@@ -69,8 +75,11 @@ export default function PregnancyPage() {
 
   if (error) {
     return (
-      <div className="p-8 text-red-500">
-        Error: {error}. Please try again later.
+      <div className="p-8 text-red-500 text-center">
+        <p>Error: {error}. Please try again later.</p>
+        <button onClick={retryFetch} className="mt-4 text-soft-blue underline">
+          Retry
+        </button>
       </div>
     );
   }
@@ -83,7 +92,11 @@ export default function PregnancyPage() {
         dangerouslySetInnerHTML={{ __html: data.content }}
       />
       {data.image && (
-        <img src={data.image} alt="Pregnancy" className="mb-8 mx-auto w-full max-w-lg rounded-lg" />
+        <img
+          src={data.image}
+          alt="Illustration related to pregnancy"
+          className="mb-8 mx-auto w-full max-w-lg rounded-lg"
+        />
       )}
       <h2 className="text-soft-blue text-2xl font-bold mb-4">Information</h2>
       <ul className="text-gray-700 list-disc list-inside mb-8">
@@ -99,7 +112,11 @@ export default function PregnancyPage() {
       <div className="text-gray-700 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
         {Object.values(data.key_feature).map((feature, index) => (
           <div key={index} className="text-left">
-            <img src={feature.image} alt={feature.name} className="mb-2 w-full h-48 object-cover rounded-md" />
+            <img
+              src={feature.image}
+              alt={feature.name}
+              className="mb-2 w-full h-48 object-cover rounded-md"
+            />
             <h3 className="font-bold">{feature.name}</h3>
             <p>{feature.description}</p>
           </div>

@@ -32,35 +32,57 @@ export default function PubertyPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await fetch('/api/puberty');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const result: PubertyData = await response.json();
-        setData(result);
-      } catch (error) {
-        console.error('Fetching error:', error);
-        setError((error as Error).message);
-      } finally {
-        setLoading(false);
+  const getData = async () => {
+    setLoading(true);
+    setError(null); // Reset error state before fetching data
+    try {
+      const response = await fetch('/api/puberty');
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-    };
+      const result: PubertyData = await response.json();
+      setData(result);
+    } catch (error) {
+      console.error('Fetching error:', error);
+      setError((error as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     getData();
   }, []);
 
-  if (loading) return <div className="flex justify-center items-center min-h-screen"><span className="text-soft-blue">Loading...</span></div>;
-  if (error) return <div className="p-8 text-red-500">Error: {error}</div>;
+  const retryFetch = () => {
+    getData(); // Call the getData function again
+  };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <span className="text-soft-blue">Loading...</span>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-8 text-red-500 text-center">
+        <p>Error: {error}. Please try again later.</p>
+        <button onClick={retryFetch} className="mt-4 text-soft-blue underline">
+          Retry
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="p-8 bg-cream-white text-gray-700 min-h-screen text-center">
       <h1 className="text-soft-blue text-4xl mb-4">{data.title}</h1>
       <div className="text-gray-700 whitespace-pre-line mb-8">{data.content}</div>
       <h2 className="text-2xl text-soft-blue font-bold mb-4">Information</h2>
-      <ul className="list-disc list-inside">
+      <ul className="list-disc list-inside mb-8">
         {Array.isArray(data.information) && data.information.length > 0 ? (
           data.information.map((info, index) => (
             <li key={index} className="mb-2">{info}</li>
