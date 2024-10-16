@@ -19,8 +19,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>{metadata.title}</title>
-        <meta name="description" content={metadata.description} />
+        <title>{metadata.title ?? 'Default Title'}</title> {/* Added fallback */}
+        <meta name="description" content={metadata.description ?? 'Default description'} /> {/* Added fallback */}
       </head>
       <body className={`${inter.className} flex flex-col min-h-screen bg-creamWhite`}>
         <Header />
