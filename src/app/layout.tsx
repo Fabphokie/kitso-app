@@ -7,8 +7,8 @@ import Footer from "../components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Kitso",
-  description: "A comprehensive app about the journey from girlhood into womanhood.",
+  title: "Kitso",  // Remove the type assertion
+  description: "A comprehensive app about the journey from girlhood into womanhood.", // Remove the type assertion
 };
 
 export default function RootLayout({
@@ -19,8 +19,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>{metadata.title ?? 'Default Title'}</title> {/* Added fallback */}
-        <meta name="description" content={metadata.description ?? 'Default description'} /> {/* Added fallback */}
+        <title>{metadata.title}</title>  {/* No fallback needed */}
+        <meta name="description" content={metadata.description} />  {/* No fallback needed */}
       </head>
       <body className={`${inter.className} flex flex-col min-h-screen bg-creamWhite`}>
         <Header />
